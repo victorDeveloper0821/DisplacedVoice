@@ -1,0 +1,8 @@
+python-dotenv
+numpy
+pandas
+geopandas
+plotly
+statsmodels
+matplotlib
+seaborn

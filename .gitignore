@@ -2,3 +2,8 @@
 Copy_of_Regression_Analysis(Eugenia)_.ipynb
 *.csv
 .ipynb_checkpoints/**
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
