@@ -52,6 +52,7 @@ def fetch_median_income(year, state, county, api_key):
     df["incomeLevel"] = pd.qcut(
         df["medianIncome"], q=4, labels=["Low", "Moderate", "High", "Very High"]
     )
+    df[["state", "county", "tract"]] = df[["state", "county", "tract"]].astype(str)
     df["GeoID"] = df["state"] + df["county"] + df["tract"]
     return df
 
@@ -64,6 +65,7 @@ def fetch_occupation(year, state, county, api_key):
     df["RenterOccupied"] = df["B25008_003E"] / df["B25008_001E"]
     df.drop(columns=codes + ["NAME"], inplace=True)
     df["LiveType"] = df[["OwnerOccupied", "RenterOccupied"]].idxmax(axis=1)
+    df[["state", "county", "tract"]] = df[["state", "county", "tract"]].astype(str)
     df["GeoID"] = df["state"] + df["county"] + df["tract"]
     return df
 
@@ -84,6 +86,7 @@ def fetch_burden(year, state, county, api_key):
     df["burden"] = df[
         ["lowBurdan", "moderateBurdan", "costBurdan", "highBurdan"]
     ].idxmax(axis=1)
+    df[["state", "county", "tract"]] = df[["state", "county", "tract"]].astype(str)
     df["GeoID"] = df["state"] + df["county"] + df["tract"]
     return df
 
@@ -112,6 +115,7 @@ def fetch_race(year, state, county, api_key):
     }
     df.rename(columns=rename_map, inplace=True)
     df["Majority"] = df[RACE_COLS].idxmax(axis=1)
+    df[["state", "county", "tract"]] = df[["state", "county", "tract"]].astype(str)
     df["GeoID"] = df["state"] + df["county"] + df["tract"]
     df.drop(columns=["NAME", "Total"], inplace=True)
     return df
@@ -147,6 +151,7 @@ def fetch_house_structure(year, state, county, api_key):
     ]].idxmax(axis=1)
     result[["state", "county", "tract"]] = df[["state", "county", "tract"]].values
     result = result.loc[total.values > 0].copy()
+    result[["state", "county", "tract"]] = result[["state", "county", "tract"]].astype(str)
     result["GeoID"] = result["state"] + result["county"] + result["tract"]
     return result
 
